@@ -19,12 +19,17 @@ def lst_tipos_processo(client)->list:
 
     return client('listar_tipos_procedimento', id_unidade=None, id_serie=None)
 
-#tipo de documento? sei é muito confuso
+
 @set_client
 def lst_tipos_documento(client)->list:
 
     return client('listar_series', id_unidade=None, id_tipo_procedimento=None)
 
+#prodam precisa conceder acesso
+@set_client
+def lst_hipoteses_legais_acesso_restrito(client)->list:
+
+    return client('listar_hipoteses_legais', id_unidade=None, nivel_acesso=1)
 
 
 

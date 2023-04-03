@@ -1,7 +1,7 @@
 from zeep import Client
 from zeep.xsd import Nil
 from functools import partial
-from core.utils.string import camel_case
+from core.utils.string import snake_to_camel_case
 from core.config import WSDL, USER, PASSW
 
 from typing import Callable
@@ -15,7 +15,7 @@ class SEISoap:
     def __get_service(self, service_name:str)->Callable:
 
         #nomes de servico sao em camel case
-        service_name = camel_case(service_name)
+        service_name = snake_to_camel_case(service_name)
         try:
             return getattr(self.client.service, service_name)
         except KeyError:
@@ -42,7 +42,7 @@ class SEISoap:
 
         #nos parametros eh camelcase com maiuscula no começo
         params = {
-                camel_case(key, inicio_minuscula=False) : self.__solve_null(val)
+                snake_to_camel_case(key, inicio_minuscula=False) : self.__solve_null(val)
                 for key, val in kwargs.items()
                 }
 

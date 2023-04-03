@@ -1,4 +1,5 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, ValidationError
+from typing import Literal
 
 from .validators import s_n_to_bool
 
@@ -24,6 +25,37 @@ class TipoProcesso(BaseModel):
 
     id_tipo_procedimento : str
     nome : str
+
+class TipoDocumento(BaseModel):
+
+    id_serie : str
+    nome : str
+    aplicabilidade : Literal[
+                            'internos_e_externos',
+                            'internos',
+                            'externos',
+                            'formularios'
+                        ]
+
+    @validator('aplicabilidade', pre=True, always=True)
+    def padronizar_aplicabilidade(cls, v)->str:
+
+        val = str(v).lower().strip()
+
+        mapper = {
+            't' : 'internos_e_externos',
+            'i' : 'internos',
+            'e' : 'externos',
+            'f' : 'formularios'
+        }
+
+        try:
+            return mapper[val]
+        except KeyError:
+            raise ValidationError(f'Valor fora do padrão: {v}. Opções: {mapper}')
+
+
+
 
 
 

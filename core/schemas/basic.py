@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator, ValidationError
+from pydantic import BaseModel, validator
 from typing import Literal
 
 from .validators import s_n_to_bool
@@ -63,7 +63,7 @@ class TipoDocumento(BaseModel):
         try:
             return mapper[val]
         except KeyError:
-            raise ValidationError(f'Valor fora do padrão: {val}. Opções: {mapper}')
+            raise ValueError(f'Valor fora do padrão: {val}. Opções: {mapper}')
 
 
 

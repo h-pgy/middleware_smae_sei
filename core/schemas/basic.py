@@ -38,9 +38,9 @@ class TipoDocumento(BaseModel):
                         ]
 
     @validator('aplicabilidade', pre=True, always=True)
-    def padronizar_aplicabilidade(cls, v)->str:
+    def padronizar_aplicabilidade(cls, value, values)->str:
 
-        val = str(v).lower().strip()
+        val = str(value).lower().strip()
 
         mapper = {
             't' : 'internos_e_externos',
@@ -49,10 +49,21 @@ class TipoDocumento(BaseModel):
             'f' : 'formularios'
         }
 
+        aceitos = {
+                    'internos_e_externos',
+                    'internos',
+                    'externos',
+                    'formularios'
+                    }
+
+        #tem que checar para ver se já está construindo com o objeto correto
+        if value in aceitos:
+            return value
+
         try:
             return mapper[val]
         except KeyError:
-            raise ValidationError(f'Valor fora do padrão: {v}. Opções: {mapper}')
+            raise ValidationError(f'Valor fora do padrão: {val}. Opções: {mapper}')
 
 
 

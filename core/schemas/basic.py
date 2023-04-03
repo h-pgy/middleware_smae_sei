@@ -19,6 +19,13 @@ class Unidade(BaseModel):
                                       allow_reuse=True, pre=True, always=True)(s_n_to_bool)
     _ouvidoria_to_bool = validator('sin_ouvidoria', 
                                    allow_reuse=True, pre=True, always=True)(s_n_to_bool)
+    
+class TipoProcesso(BaseModel):
+
+    id_tipo_procedimento : str
+    nome : str
+
+
 
 
 

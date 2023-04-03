@@ -2,6 +2,7 @@ from zeep import Client
 from zeep.xsd import Nil
 from functools import partial
 from core.utils.string import snake_to_camel_case
+from .data_parsing import zeep_obj_to_dict, zeep_obj_array_to_dict_array
 from core.config import WSDL, USER, PASSW
 
 from typing import Callable
@@ -48,7 +49,7 @@ class SEISoap:
 
         return params
 
-    def __call__(self, service_name:str, *_, **kwargs):
+    def get_data(self, service_name:str, *_, **kwargs):
 
         service = self.authorized_service(service_name)
 
@@ -57,5 +58,17 @@ class SEISoap:
         params = self.__solve_params(kwargs)
 
         return service(**params)
+
+    def __call__(self, service_name:str, *_, array_return=True, **kwargs):
+
+        data = self.get_data(service_name, **kwargs)
+
+        #func to parse data back to python dtypes
+        if array_return:
+            data=  zeep_obj_array_to_dict_array(data)
+        else:
+            data = zeep_obj_to_dict(data)
+
+        return data
         
     

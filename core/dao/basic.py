@@ -1,18 +1,10 @@
-from core.soap import SEIClient
-
-def set_client(func):
-
-    client = SEIClient()
-    def wraped(*args, **kwargs):
-        
-        return func(client, *args, **kwargs)
-
-    return wraped
+from .decorators import set_client
 
 @set_client
 def lst_unidades(client)->list:
 
     return client('listar_unidades', id_tipo_procedimento=None, id_serie=None)
+
 
 @set_client
 def lst_tipos_processo(client)->list:
@@ -24,6 +16,7 @@ def lst_tipos_processo(client)->list:
 def lst_tipos_documento(client)->list:
 
     return client('listar_series', id_unidade=None, id_tipo_procedimento=None)
+
 
 #prodam precisa conceder acesso
 @set_client

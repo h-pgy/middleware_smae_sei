@@ -64,6 +64,14 @@ class TipoDocumento(BaseModel):
             return mapper[val]
         except KeyError:
             raise ValueError(f'Valor fora do padrão: {val}. Opções: {mapper}')
+        
+
+class HipoteseLegal(BaseModel):
+
+    id_hipotese_legal : str
+    nome : str
+    base_legal : str
+    nivel_acesso : str
 
 
 

@@ -18,7 +18,6 @@ def lst_tipos_documento(client)->list:
     return client('listar_series', id_unidade=None, id_tipo_procedimento=None)
 
 
-#prodam precisa conceder acesso
 @set_client
 def lst_hipoteses_legais_acesso_restrito(client)->list:
 

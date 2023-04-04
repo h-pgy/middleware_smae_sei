@@ -31,4 +31,12 @@ def get_tipos_doc():
 
 app = add_pagination(app)
 
+@app.get("/documento/hipoteses_legais_acesso_restrito", response_model=Page[schemas.HipoteseLegal], tags=['parametros_do_processo'])
+def get_tipos_doc():
+
+    hipoteses = dao.lst_hipoteses_legais_acesso_restrito()
+    return paginate(hipoteses)
+
+app = add_pagination(app)
+
 
